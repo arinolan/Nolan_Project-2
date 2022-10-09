@@ -1,0 +1,55 @@
+---
+title: "Project2"
+output: html_document
+date: "2022-10-08"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyr)
+library(dplyr)
+```
+
+1. import data from github
+```{r}
+mydata <- read.csv("https://raw.githubusercontent.com/arinolan/Nolan_Project-2/main/Untidy_Dog_Data.csv")
+
+mydata
+```
+
+2. clean data
+```{r}
+kgs_calc <- 40 * 2.2
+df_mydata <- mydata
+
+df_mydata$Weight[df_mydata$Weight == '90lbs'] <- 90
+df_mydata$Weight[df_mydata$Weight == '10 pounds'] <- 10
+df_mydata$Weight[df_mydata$Weight == '60lbs'] <- 60
+df_mydata$Weight[df_mydata$Weight == '35'] <- 35
+df_mydata$Weight[df_mydata$Weight == '40kgs'] <- kgs_calc
+
+df_mydata
+
+```
+
+3. analysis 
+a. which dog breeds are less than 50lbs?
+b. which dog breeds are heavier than 50lbs?
+```{r}
+df_mydata[order(as.numeric(as.character(df_mydata$Weight))),]
+
+small <- df_mydata %>%
+  filter(Weight < 50)
+small$Breed
+
+large <- df_mydata %>%
+  filter(Weight > 50)
+large$Breed
+```
+
+
+
+
